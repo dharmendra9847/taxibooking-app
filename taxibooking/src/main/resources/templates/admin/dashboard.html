@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    
+    <!-- 1. CORRECT TAILWIND LINK -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. CORRECT FONT AWESOME LINK -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+</head>
+<body class="bg-gray-50 font-sans leading-normal tracking-normal">
+
+    <div class="flex flex-col md:flex-row">
+        <!-- SIDEBAR -->
+        <div class="bg-gray-900 shadow-xl h-16 fixed bottom-0 md:relative md:h-screen z-10 w-full md:w-64">
+            <div class="md:mt-12 md:w-64 md:fixed md:left-0 md:top-0 content-center md:content-start text-left justify-between">
+                <div class="flex items-center px-6 py-4 border-b border-gray-800 mb-6">
+                    <i class="fa-solid fa-taxi text-yellow-500 text-2xl mr-3"></i>
+                    <span class="text-white text-xl font-bold tracking-wider">TAXI ADMIN</span>
+                </div>
+                
+                <ul class="list-reset flex flex-row md:flex-col py-0 md:py-3 px-1 md:px-2 text-center md:text-left">
+                    <li class="mr-3 flex-1">
+                        <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-yellow-500 border-b-2 border-gray-800 hover:border-yellow-500">
+                            <i class="fa-solid fa-chart-line pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="mr-3 flex-1">
+                        <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-yellow-500 border-b-2 border-gray-800 hover:border-yellow-500">
+                            <i class="fa-solid fa-address-book pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">Contacts</span>
+                        </a>
+                    </li>
+                    <li class="mr-3 flex-1">
+                        <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-yellow-500 border-b-2 border-gray-800 hover:border-yellow-500">
+                            <i class="fa-solid fa-calendar-check pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">Bookings</span>
+                        </a>
+                    </li>
+                    <li class="mr-3 flex-1">
+                        <!-- LOGOUT FORM (Required for Spring Security POST) -->
+                        <form th:action="@{/dologout}" method="post" id="logoutForm" class="hidden"></form>
+                        <a href="javascript:void(0)" onclick="document.getElementById('logoutForm').submit();" 
+                           class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-red-500 border-b-2 border-gray-800 hover:border-red-500">
+                            <i class="fa-solid fa-right-from-bracket pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+
+            <div class="p-6">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-800">Welcome back, Admin!</h1>
+                    <p class="text-gray-600 mt-1">Here is what's happening with your taxi fleet today.</p>
+                </div>
+
+                <!-- QUICK STATS CARDS -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center">
+                        <div class="p-4 bg-yellow-100 rounded-xl text-yellow-600 mr-4">
+                            <i class="fa-solid fa-envelope-open-text fa-2x"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Total Contacts</p>
+                            <h3 class="text-2xl font-bold text-gray-800">128</h3>
+                            <a href="#" class="text-xs text-yellow-600 font-semibold hover:underline">View All &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center">
+                        <div class="p-4 bg-green-100 rounded-xl text-green-600 mr-4">
+                            <i class="fa-solid fa-ticket fa-2x"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">New Bookings</p>
+                            <h3 class="text-2xl font-bold text-gray-800">42</h3>
+                            <a href="#" class="text-xs text-green-600 font-semibold hover:underline">View All &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center">
+                        <div class="p-4 bg-blue-100 rounded-xl text-blue-600 mr-4">
+                            <i class="fa-solid fa-car fa-2x"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Active Drivers</p>
+                            <h3 class="text-2xl font-bold text-gray-800">15</h3>
+                            <p class="text-xs text-gray-400">On-road currently</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PLACEHOLDER FOR TABLE DATA -->
+                <div class="mt-10 bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center">
+                    <div class="text-gray-300 mb-4">
+                        <i class="fa-solid fa-folder-open fa-4x"></i>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-700">Ready to manage?</h2>
+                    <p class="text-gray-500 mt-2">Select a category from the sidebar to view detailed reports.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

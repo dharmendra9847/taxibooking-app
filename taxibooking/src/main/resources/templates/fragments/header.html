@@ -1,0 +1,35 @@
+<header xmlns:th="http://www.thymeleaf.org" lang="en">
+	
+	<!--========== CREATE VARIABLE ==========-->
+	<div th:with="currentPage=${mycurrentpage}">
+		<div class="menu_block">
+		<div class="container_12">
+			<div class="grid_12">
+				<nav class="horizontal-nav full-width horizontalNav-notprocessed">
+					<ul class="sf-menu">
+						<!--========== HIGHLIGTH MY CURRENT PAGE ==========-->
+						<li th:class="${(currentPage=='/' || currentPage=='/home' || currentPage=='/index' || currentPage=='/welcome') ? 'current' : ''}"><a th:href="@{/}">Home</a></li>
+						<li th:class="${currentPage=='/about' ? 'current' : ''}"><a th:href="@{/about}">About</a></li>
+						<li th:class="${currentPage=='/cars' ? 'current' : ''}"><a th:href="@{/cars}">Cars</a></li>
+						<li th:class="${currentPage=='/services' ? 'current' : ''}"><a th:href="@{/services}">Services</a></li>
+						<li th:class="${currentPage=='/contacts' ? 'current' : ''}"><a th:href="@{/contacts}">Contacts</a></li>
+						<li th:class="${currentPage=='/admin/dashboard' ? 'current' : ''}"><a th:href="@{/admin/dashboard}">Admin Dashboard</a></li>
+					</ul>
+				</nav>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="container_12">
+		<div class="grid_12">
+			<h1>
+				<a th:href="@{/}"> <img th:src="@{/images/logo.png}"
+					alt="Your Happy Family">
+				</a>
+			</h1>
+		</div>
+	</div>
+	<div class="clear"></div>
+	</div>
+</header>

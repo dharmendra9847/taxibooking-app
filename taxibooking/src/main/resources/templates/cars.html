@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Cars</title>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no" />
+    
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}" />
+    
+    <link rel="stylesheet" th:href="@{/css/touchTouch.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/jquery-migrate-1.2.1.js}"></script>
+    <script th:src="@{/js/script.js}"></script>
+    <script th:src="@{/js/superfish.js}"></script>
+    <script th:src="@{/js/jquery.ui.totop.js}"></script>
+    <script th:src="@{/js/jquery.equalheights.js}"></script>
+    <script th:src="@{/js/jquery.mobilemenu.js}"></script>
+    <script th:src="@{/js/jquery.easing.1.3.js}"></script>
+    <script th:src="@{/js/touchTouch.jquery.js}"></script>
+    
+    <script>
+        $(document).ready(function(){
+            $().UItoTop({ easingType: 'easeOutQuart' });
+            $('.gallery a.gal').touchTouch();
+        });
+    </script>
+</head>
+<body class="" id="top">
+    <div class="main">
+        <!-- HEADER START -->
+        <div th:insert="~{fragments/header.html}"></div>
+        <!-- HEADER END -->
+
+        <div class="content">
+            <div class="ic">More Website Templates @ TemplateMonster.com - April 07, 2014!</div>
+            <div class="container_12">
+                
+                <div class="grid_12">
+                    <h3>Economy</h3>
+                </div>
+                <div class="clear"></div>
+                <div class="gallery">
+                    <div class="grid_4"><a th:href="@{/images/big1.jpg}" class="gal"><img th:src="@{/images/page3_img1.jpg}" alt=""></a></div>
+                    <div class="grid_4"><a th:href="@{/images/big2.jpg}" class="gal"><img th:src="@{/images/page3_img2.jpg}" alt=""></a></div>
+                    <div class="grid_4"><a th:href="@{/images/big3.jpg}" class="gal"><img th:src="@{/images/page3_img3.jpg}" alt=""></a></div>
+                </div>
+
+                <div class="grid_12">
+                    <h3>Standard</h3>
+                </div>
+                <div class="clear"></div>
+                <div class="gallery">
+                    <div class="grid_4"><a th:href="@{/images/big4.jpg}" class="gal"><img th:src="@{/images/page3_img4.jpg}" alt=""></a></div>
+                    <div class="grid_4"><a th:href="@{/images/big5.jpg}" class="gal"><img th:src="@{/images/page3_img5.jpg}" alt=""></a></div>
+                    <div class="grid_4"><a th:href="@{/images/big6.jpg}" class="gal"><img th:src="@{/images/page3_img6.jpg}" alt=""></a></div>
+                </div>
+
+                <div class="grid_12">
+                    <h3>Lux</h3>
+                </div>
+                <div class="clear"></div>
+                <div class="gallery">
+                    <div class="grid_4"><a th:href="@{/images/big7.jpg}" class="gal"><img th:src="@{/images/page3_img7.jpg}" alt=""></a></div>
+                    <div class="grid_4"><a th:href="@{/images/big8.jpg}" class="gal"><img th:src="@{/images/page3_img8.jpg}" alt=""></a></div>
+                    <div class="grid_4"><a th:href="@{/images/big9.jpg}" class="gal"><img th:src="@{/images/page3_img9.jpg}" alt=""></a></div>
+                </div>
+                
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER START -->
+    <div th:insert="~{fragments/footer.html}"></div>
+    <!-- FOOTER END -->
+</body>
+</html>
