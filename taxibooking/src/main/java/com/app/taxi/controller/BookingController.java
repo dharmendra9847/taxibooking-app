@@ -14,7 +14,6 @@ import com.app.taxi.model.ContactForm;
 import com.app.taxi.service.BookingFormService;
 import com.app.taxi.service.ContactFormService;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 

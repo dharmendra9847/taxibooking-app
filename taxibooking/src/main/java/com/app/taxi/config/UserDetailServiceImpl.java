@@ -37,6 +37,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 		if (count == 0) {
 			Admin admin = new Admin();
 			admin.setUsername("admin");
+			admin.setEmail("Admin@123.com"); 
 			admin.setPassword(passwordEncoder.encode("admin123"));
 			
 			adminRepository.save(admin);

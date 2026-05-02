@@ -31,6 +31,14 @@ public class Admin {
 	@Column(unique = true)
 	private String username;
 	
+	@NotBlank(message = "Email is required")
+	@Size(min = 4, max = 20, message = "Email must be between 4 and 30 characters")
+	@Pattern(
+	        regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", 
+	        message = "Email must contain at least one uppercase, one lowercase, one digit, and one special character"
+	    )
+	private String email;
+	
 	@NotBlank(message = "Password is required")
 	@Size(min = 8, message = "Password must be at least 8 characters long")
 	@Pattern(

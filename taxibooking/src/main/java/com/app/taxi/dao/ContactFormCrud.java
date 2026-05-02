@@ -15,4 +15,6 @@ public interface ContactFormCrud extends JpaRepository<ContactForm, Integer> {
 	
 	@Override
 	public List<ContactForm> findAll();
+		
+	public void deleteById(int id);
 }

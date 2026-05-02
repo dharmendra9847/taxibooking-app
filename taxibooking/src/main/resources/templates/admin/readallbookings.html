@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taxi Admin | All Bookings</title>
+
+<!-- FIX 1: Correct Tailwind Link -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+	integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- FIX 2: Correct Font Awesome Link -->
+<link rel="stylesheet" href="https://cloudflare.com">
+
+<style>
+@import url('https://googleapis.com');
+
+body {
+	font-family: 'Inter', sans-serif;
+}
+</style>
+</head>
+<body class="bg-[#f3f4f6] flex min-h-screen">
+
+	<!-- Sidebar -->
+	<aside
+		class="w-64 bg-[#0f172a] text-white flex flex-col h-screen sticky top-0 shadow-xl">
+		<div class="p-6 flex items-center gap-3">
+			<i class="fa-solid fa-taxi text-yellow-500 text-2xl"></i> <span
+				class="font-bold text-xl tracking-tight uppercase">Taxi Admin</span>
+		</div>
+		<nav class="flex-1 px-4 mt-4 space-y-1">
+			<a th:href="@{/admin/dashboard}"
+				class="flex items-center gap-3 px-4 py-3 rounded-md text-slate-400 hover:text-white transition">
+				<i class="fa-solid fa-chart-line"></i> Dashboard
+			</a> <a th:href="@{/admin/readallcontacts}"
+				class="flex items-center gap-3 px-4 py-3 rounded-md text-slate-400 hover:text-white transition">
+				<i class="fa-solid fa-address-book"></i> Contacts
+			</a>
+			<div class="relative">
+				<div
+					class="absolute left-0 top-0 h-full w-1 bg-yellow-500 rounded-r"></div>
+				<a th:href="@{/admin/readallbookings}"
+					class="flex items-center gap-3 px-4 py-3 bg-slate-800 text-yellow-500 font-semibold rounded-r-md">
+					<i class="fa-solid fa-calendar-check"></i> Bookings
+				</a>
+			</div>
+			<a th:href="@{/logout}"
+				class="flex items-center gap-3 px-4 py-3 rounded-md text-slate-400 hover:text-red-400 transition mt-10">
+				<i class="fa-solid fa-right-from-bracket"></i> Logout
+			</a>
+		</nav>
+	</aside>
+
+	<!-- Main Content -->
+	<main class="flex-1 p-8 overflow-hidden">
+		<div class="flex justify-between items-start mb-8">
+			<div>
+				<h1 class="text-3xl font-extrabold text-slate-800">Booking
+					Reservations</h1>
+				<p class="text-slate-500 text-sm mt-1 font-medium">Direct
+					database view of all travel records.</p>
+			</div>
+			<div
+				class="bg-yellow-500 px-5 py-2 rounded-xl text-slate-900 font-bold shadow-sm">
+				<span
+					th:text="${allbookings != null ? #lists.size(allbookings) : '0'}">0</span>
+				Total
+			</div>
+		</div>
+
+		<!-- DELETE SUCCESS MODAL -->
+		<div id="deleteSuccessModal" th:if="${success}"
+			class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+
+			<div
+				class="bg-white rounded-[2rem] p-10 max-w-sm w-full text-center shadow-2xl animate__animated animate__bounceIn">
+				<!-- Success Icon -->
+				<div
+					class="w-24 h-24 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+					<i class="fa-solid fa-trash-arrow-up text-4xl"></i>
+				</div>
+
+				<!-- Text Content -->
+				<h2 class="text-3xl font-black text-gray-800 mb-2">Deleted!</h2>
+				<p class="text-gray-500 mb-8" th:text="${success}">The booking
+					has been removed.</p>
+
+				<!-- Action Button -->
+				<button onclick="closeDeleteModal()"
+					class="w-full py-4 bg-gray-900 text-white font-black rounded-2xl hover:bg-red-600 transition-all shadow-xl active:scale-95">
+					DONE</button>
+			</div>
+		</div>
+		<!-- DELETE SUCCESS MODAL -->
+
+		<!-- Table Card -->
+		<div
+			class="bg-white rounded-[24px] shadow-sm border border-gray-100 overflow-hidden">
+			<div class="overflow-x-auto">
+				<table class="w-full text-left whitespace-nowrap">
+					<thead>
+						<tr
+							class="text-slate-400 text-xs font-bold uppercase tracking-wider border-b border-gray-50 bg-gray-50/50">
+							<th class="px-8 py-6">ID</th>
+							<th class="px-8 py-6">Name</th>
+							<th class="px-8 py-6">From</th>
+							<th class="px-8 py-6">Email</th>
+							<th class="px-8 py-6">To</th>
+							<th class="px-8 py-6">Time</th>
+							<th class="px-8 py-6">Date</th>
+							<th class="px-8 py-6">Comfort</th>
+							<th class="px-8 py-6">Adult</th>
+							<th class="px-8 py-6">Children</th>
+							<th class="px-8 py-6">Message</th>
+							<th class="px-8 py-6 text-center">Actions</th>
+						</tr>
+					</thead>
+					<tbody class="divide-y divide-gray-50">
+						<tr th:each="booking : ${allbookings}"
+							class="hover:bg-gray-50/80 transition-colors">
+							<td class="px-8 py-6 text-sm text-slate-400 font-mono"
+								th:text="${booking.id}">1</td>
+							<td class="px-8 py-6 text-sm font-bold text-slate-800"
+								th:text="${booking.name}">Name</td>
+							<td class="px-8 py-6 text-sm text-slate-600"
+								th:text="${booking.from}">From</td>
+							<td class="px-8 py-6 text-sm text-blue-500 underline"
+								th:text="${booking.email}">Email</td>
+							<td class="px-8 py-6 text-sm text-slate-600"
+								th:text="${booking.to}">To</td>
+							<td class="px-8 py-6 text-sm text-slate-700 font-semibold"
+								th:text="${booking.time}">Time</td>
+							<td class="px-8 py-6 text-sm text-slate-700 font-semibold"
+								th:text="${booking.date}">Date</td>
+							<td class="px-8 py-6"><span
+								class="bg-slate-100 px-3 py-1 rounded-md text-[10px] font-black uppercase text-slate-600 border"
+								th:text="${booking.comfort}">Class</span></td>
+							<td class="px-8 py-6 text-sm font-bold text-slate-800"
+								th:text="${booking.adult}">0</td>
+							<td class="px-8 py-6 text-sm font-bold text-slate-800"
+								th:text="${booking.children}">0</td>
+							<td class="px-8 py-6">
+								<button
+									class="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition shadow-sm"
+									title="View Message">
+									<i class="fa-solid fa-eye text-lg"></i>
+								</button>
+							</td>
+							<td class="px-8 py-6">
+								<div class="flex justify-center gap-2">
+									<a th:href="@{/admin/deleteBooking/{id}(id=${booking.id})}"
+										onclick="return confirm('Archive this record?')"
+										class="h-9 w-9 bg-red-50 text-red-500 rounded-lg hover:bg-red-600 hover:text-white transition flex items-center justify-center">
+										<i class="fa-solid fa-trash-can text-sm"></i>
+									</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</main>
+
+	<!-- Message Modal -->
+	<div id="msgModal"
+		class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+		<div
+			class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-8 transform transition-all animate-in zoom-in duration-300">
+			<div class="flex justify-between items-center mb-6">
+				<h3
+					class="text-xl font-bold text-slate-800 italic underline decoration-yellow-500 decoration-4">Customer
+					Message</h3>
+				<button onclick="hideMsg()"
+					class="text-slate-400 hover:text-slate-900">
+					<i class="fa-solid fa-xmark text-xl"></i>
+				</button>
+			</div>
+			<p id="msgText"
+				class="text-slate-600 italic leading-relaxed font-medium bg-slate-50 p-6 rounded-xl border border-slate-100">Loading...</p>
+			<button onclick="hideMsg()"
+				class="w-full mt-6 bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-slate-800 transition">Close
+				Preview</button>
+		</div>
+	</div>
+
+	<script>
+		function showMsg(msg) {
+			document.getElementById('msgText').innerText = msg;
+			const modal = document.getElementById('msgModal');
+			modal.classList.replace('hidden', 'flex');
+			document.body.style.overflow = 'hidden';
+		}
+		function hideMsg() {
+			const modal = document.getElementById('msgModal');
+			modal.classList.replace('flex', 'hidden');
+			document.body.style.overflow = 'auto';
+		}
+		
+		function closeDeleteModal() {
+	        const modal = document.getElementById('deleteSuccessModal');
+	        modal.classList.add('animate__fadeOut');
+	        setTimeout(() => {
+	            modal.style.display = 'none';
+	        }, 500);
+	    }
+	</script>
+</body>
+</html>
