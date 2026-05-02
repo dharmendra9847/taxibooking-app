@@ -11,6 +11,18 @@
 <link rel="stylesheet" th:href="@{/css/form.css}">
 <link rel="stylesheet" th:href="@{/css/style.css}">
 
+<!-- CORRECTED: These links point to the actual library files -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- CORRECTED: Full path to Font Awesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- CORRECTED: Full path for Animations -->
+<link rel="stylesheet" href="https://cloudflare.com"/>
+
+
+
+
 <script th:src="@{/js/jquery.js}"></script>
 <script th:src="@{/js/jquery-migrate-1.2.1.js}"></script>
 <script th:src="@{/js/script.js}"></script>
@@ -50,73 +62,126 @@
 						</figure>
 					</div>
 				</div>
-				<div class="grid_5">
-					<h3>Contact Info</h3>
-					<div class="map">
-						<div class="text1 color2">Whether you need support, want to
-							partner with us, or have a feedback — our team is always ready to
-							assist.</div>
-						<p>
-							Don’t forget, 24/7 support is available for Taxi <span
-								class="color1"><a
-								href="http://www.templatemonster.com/website-templates.php"
-								rel="nofollow">premium themes</a></span> only.
-						</p>
-						<address>
-							<dl>
-								<dt>
-									The Company Name Inc. <br> 9870 St Vincent Place,<br>
-									Glasgow, DC 45 Fr 45.
-								</dt>
-								<dd>
-									<span>Telephone:</span> +91 9315917780
-								</dd>
-								<dd>
-									<span>FAX:</span> +1 800 889 9898
-								</dd>
-								<dd>
-									E-mail: <a href="#" class="color1">taxibooking@gmail.com</a>
-								</dd>
-							</dl>
-						</address>
-					</div>
-				</div>
-				<div class="grid_6 prefix_1">
-					<h3>Contact Form</h3>
-					<form id="form" th:action="@{/contactsform}"
-						th:object="${contactForm}" method="post">
-						<div class="success_wrapper">
-							<div class="success-message">Contact form submitted</div>
-						</div>
-						<label class="name"> <input type="text" name="name"
-							placeholder="Name" th:value="${contactForm.name}"
-							data-constraints="@Required @JustLetters" /> <span
-							th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-							style="color: red;"></span>
-						</label> <label class="email"> <input type="text" name="email"
-							placeholder="E-mail" th:value="${contactForm.email}"
-							data-constraints="@Required @Email" /> <span
-							th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-							style="color: red;"></span>
-						</label> <label class="phone"> <input type="text" name="phone"
-							placeholder="Phone" th:value="${contactForm.phone}"
-							data-constraints="@Required @JustNumbers" /> <span
-							th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"
-							style="color: red;"></span>
-						</label> <label class="message"> <textarea name="message"
-								placeholder="Message" th:text="${contactForm.message}"
-								data-constraints='@Required @Length(min=20,max=999999)'></textarea>
-							<span th:if="${#fields.hasErrors('message')}"
-							th:errors="*{message}" style="color: red;"></span>
-						</label>
-						<div>
-							<div class="clear"></div>
-							<div class="btns">
-								<button type="submit" class="btn">Send</button>
-								<a href="#" data-type="reset" class="btn">Clear</a>
+				<div class="container mx-auto px-4 py-12">
+					<div class="flex flex-wrap -mx-4 items-start">
+
+						<!-- Left Side: Contact Info -->
+						<div
+							class="w-full lg:w-5/12 px-4 mb-12 lg:mb-0 animate__animated animate__fadeInLeft">
+							<h3
+								class="text-3xl font-bold text-gray-800 mb-6 border-l-4 border-yellow-500 pl-4">Contact
+								Info</h3>
+							<div
+								class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100">
+								<p class="text-gray-600 mb-6 text-lg italic">"Whether you
+									need support, want to partner with us, or have feedback — our
+									team is ready to assist."</p>
+
+								<!-- Changed <address> to <div> to stop the warning -->
+								<div class="not-italic space-y-6">
+									<div class="flex items-start">
+										<div class="bg-yellow-100 p-3 rounded-xl mr-4 text-yellow-600">
+											<i class="fa-solid fa-location-dot"></i>
+										</div>
+										<p class="text-gray-700">9870 St Vincent Place, Glasgow,
+											DC 45 Fr 45.</p>
+									</div>
+
+									<div class="flex items-center">
+										<div class="bg-yellow-100 p-3 rounded-xl mr-4 text-yellow-600">
+											<i class="fa-solid fa-phone"></i>
+										</div>
+										<p class="text-gray-700">+91 9315917780</p>
+									</div>
+
+									<div class="flex items-center">
+										<div class="bg-yellow-100 p-3 rounded-xl mr-4 text-yellow-600">
+											<i class="fa-solid fa-envelope"></i>
+										</div>
+										<a href="mailto:taxibooking@gmail.com"
+											class="text-yellow-600 font-bold hover:underline">taxibooking@gmail.com</a>
+									</div>
+								</div>
+
 							</div>
 						</div>
-					</form>
+
+						<!-- Right Side: Interactive Form -->
+						<div
+							class="w-full lg:w-6/12 lg:ml-auto px-4 animate__animated animate__fadeInRight">
+							<div
+								class="bg-white p-8 md:p-10 rounded-3xl shadow-2xl border border-gray-50 relative overflow-hidden">
+								<div class="absolute top-0 right-0 p-4 opacity-10">
+									<i class="fa-solid fa-paper-plane fa-4x text-yellow-500"></i>
+								</div>
+								<h3 class="text-3xl font-bold text-gray-800 mb-8">Send a
+									Message</h3>
+
+								<form th:action="@{/contactsform}" th:object="${contactForm}"
+									method="post" class="space-y-6">
+									<div class="relative">
+										<input type="text" th:field="*{name}" placeholder="Full Name"
+											class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-yellow-500 focus:bg-white outline-none transition-all peer">
+										<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+											class="text-red-500 text-xs mt-1 font-medium"></p>
+									</div>
+
+									<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+										<div>
+											<input type="email" th:field="*{email}"
+												placeholder="Email Address"
+												class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-yellow-500 outline-none transition-all">
+											<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+												class="text-red-500 text-xs mt-1 font-medium"></p>
+										</div>
+										<div>
+											<input type="text" th:field="*{phone}"
+												placeholder="Phone Number"
+												class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-yellow-500 outline-none transition-all">
+											<p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"
+												class="text-red-500 text-xs mt-1 font-medium"></p>
+										</div>
+									</div>
+
+									<div>
+										<textarea th:field="*{message}" rows="4"
+											placeholder="Your Message..."
+											class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-yellow-500 outline-none transition-all"></textarea>
+										<p th:if="${#fields.hasErrors('message')}"
+											th:errors="*{message}"
+											class="text-red-500 text-xs mt-1 font-medium"></p>
+									</div>
+
+									<div class="flex flex-col sm:flex-row gap-4 pt-4">
+										<button type="submit"
+											class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-extrabold py-4 px-8 rounded-2xl shadow-lg transform hover:scale-[1.02] transition-all flex items-center justify-center">
+											SEND NOW <i class="fa-solid fa-paper-plane ml-3"></i>
+										</button>
+										<button type="reset"
+											class="px-8 py-4 bg-gray-100 text-gray-500 font-bold rounded-2xl hover:bg-gray-200 transition">
+											CLEAR</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- SUCCESS MODAL POPUP -->
+				<div id="successModal" th:if="${success}"
+					class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+					<div
+						class="bg-white rounded-[2rem] p-10 max-w-sm w-full text-center shadow-2xl animate__animated animate__backInDown">
+						<div
+							class="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+							<i class="fa-solid fa-check text-5xl"></i>
+						</div>
+						<h2 class="text-3xl font-black text-gray-800 mb-2">Sent!</h2>
+						<p class="text-gray-500 mb-8" th:text="${success}"></p>
+						<button onclick="this.closest('#successModal').remove()"
+							class="w-full py-4 bg-gray-900 text-white font-black rounded-2xl hover:bg-black transition-all shadow-xl">
+							AWESOME</button>
+					</div>
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -127,7 +192,7 @@
 	<!-- FOOTER START -->
 	<div th:insert="~{fragments/footer.html}"></div>
 	<!-- FOOTER END -->
-	
-	
+
+
 </body>
 </html>

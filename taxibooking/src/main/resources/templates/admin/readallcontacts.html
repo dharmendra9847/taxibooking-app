@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Read All Contacts | Admin</title>
+
+<!-- FIX 1: Correct Tailwind Link -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- FIX 2: Correct Font Awesome Link -->
+<link rel="stylesheet" href="https://cloudflare.com">
+
+<!-- REQUIRED: Add these two correct links to your <head> or icons/popups won't work -->
+<link rel="stylesheet" href="https://cloudflare.com">
+<link rel="stylesheet" href="https://cloudflare.com" />
+
+</head>
+<body class="bg-gray-50 font-sans leading-normal tracking-normal">
+
+	<!-- DELETE SUCCESS MODAL -->
+	<div id="deleteSuccessModal" th:if="${success}"
+		class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+
+		<div
+			class="bg-white rounded-[2rem] p-10 max-w-sm w-full text-center shadow-2xl animate__animated animate__bounceIn">
+			<!-- Success Icon -->
+			<div
+				class="w-24 h-24 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+				<i class="fa-solid fa-trash-arrow-up text-4xl"></i>
+			</div>
+
+			<!-- Text Content -->
+			<h2 class="text-3xl font-black text-gray-800 mb-2">Deleted!</h2>
+			<p class="text-gray-500 mb-8" th:text="${success}">The contact
+				has been removed.</p>
+
+			<!-- Action Button -->
+			<button onclick="closeDeleteModal()"
+				class="w-full py-4 bg-gray-900 text-white font-black rounded-2xl hover:bg-red-600 transition-all shadow-xl active:scale-95">
+				DONE</button>
+		</div>
+	</div>
+	<!-- DELETE SUCCESS MODAL -->
+
+	<div class="flex flex-col md:flex-row">
+		<!-- SIDEBAR -->
+		<div
+			class="bg-gray-900 shadow-xl h-16 fixed bottom-0 md:relative md:h-screen z-10 w-full md:w-64">
+			<div
+				class="md:mt-12 md:w-64 md:fixed md:left-0 md:top-0 content-center md:content-start text-left justify-between">
+				<div
+					class="flex items-center px-6 py-4 border-b border-gray-800 mb-6">
+					<i class="fa-solid fa-taxi text-yellow-500 text-2xl mr-3"></i> <span
+						class="text-white text-xl font-bold tracking-wider">TAXI
+						ADMIN</span>
+				</div>
+
+				<ul
+					class="list-reset flex flex-row md:flex-col py-0 md:py-3 px-1 md:px-2 text-center md:text-left">
+					<li class="mr-3 flex-1"><a th:href="@{/admin/dashboard}"
+						class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-yellow-500 border-b-2 border-gray-800 hover:border-yellow-500">
+							<i class="fa-solid fa-chart-line pr-0 md:pr-3"></i><span
+							class="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">Dashboard</span>
+					</a></li>
+					<li class="mr-3 flex-1">
+						<!-- FIX 3: Corrected URL mapping to /admin/readallcontacts --> <a
+						th:href="@{/admin/readallcontacts}"
+						class="block py-1 md:py-3 pl-1 align-middle text-yellow-500 no-underline border-b-2 border-yellow-500">
+							<i class="fa-solid fa-address-book pr-0 md:pr-3"></i><span
+							class="pb-1 md:pb-0 text-xs md:text-base text-white block md:inline-block">Contacts</span>
+					</a>
+					</li>
+					<li class="mr-3 flex-1"><a href="#"
+						class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-yellow-500 border-b-2 border-gray-800 hover:border-yellow-500">
+							<i class="fa-solid fa-calendar-check pr-0 md:pr-3"></i><span
+							class="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">Bookings</span>
+					</a></li>
+					<li class="mr-3 flex-1">
+						<form th:action="@{/dologout}" method="post" id="logoutForm"
+							class="hidden"></form> <a href="javascript:void(0)"
+						onclick="document.getElementById('logoutForm').submit();"
+						class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-red-500 border-b-2 border-gray-800 hover:border-red-500">
+							<i class="fa-solid fa-right-from-bracket pr-0 md:pr-3"></i><span
+							class="pb-1 md:pb-0 text-xs md:text-base text-gray-400 md:text-gray-200 block md:inline-block">Logout</span>
+					</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- MAIN CONTENT -->
+		<div
+			class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+			<div class="p-6">
+				<div class="mb-8 flex justify-between items-center">
+					<div>
+						<h1 class="text-3xl font-bold text-gray-800">Contact Messages</h1>
+						<p class="text-gray-600 mt-1">Manage and respond to user
+							inquiries.</p>
+					</div>
+					<div class="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow">
+						<!-- FIX 4: Changed 'contacts' to 'allcontacts' -->
+						<span th:text="${allcontacts != null ? allcontacts.size() : 0}">0</span>
+						Total Messages
+					</div>
+				</div>
+
+				<div
+					class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+					<div class="overflow-x-auto">
+						<table class="w-full text-left border-collapse">
+							<thead class="bg-gray-50 border-b border-gray-100">
+								<tr>
+									<th class="px-6 py-4 text-sm font-semibold text-gray-700">ID</th>
+									<th class="px-6 py-4 text-sm font-semibold text-gray-700">Name</th>
+									<th class="px-6 py-4 text-sm font-semibold text-gray-700">Email</th>
+									<th class="px-6 py-4 text-sm font-semibold text-gray-700">Message</th>
+									<th class="px-6 py-4 text-sm font-semibold text-gray-700">Phone</th>
+									<th
+										class="px-6 py-4 text-sm font-semibold text-gray-700 text-center">Actions</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-gray-50">
+								<!-- FIX 5: Iteration changed to 'allcontacts' -->
+								<tr th:each="contact : ${allcontacts}"
+									class="hover:bg-yellow-50/30 transition-colors">
+									<td class="px-6 py-4 text-sm text-gray-500"
+										th:text="${contact.id}">1</td>
+									<td class="px-6 py-4 text-sm font-medium text-gray-800"
+										th:text="${contact.name}">John Doe</td>
+									<td class="px-6 py-4 text-sm text-gray-600"><a
+										th:href="'mailto:' + ${contact.email}"
+										class="text-blue-500 hover:underline"
+										th:text="${contact.email}">john@example.com</a></td>
+									<td class="px-6 py-4 text-sm text-gray-600 italic">"<span
+										th:text="${contact.message}">Message content...</span>"
+									</td>
+									<td class="px-6 py-4 text-sm text-gray-600 italic">"<span
+										th:text="${contact.phone}">+91 9876543210</span>"
+									</td>
+									<td class="px-6 py-4 text-center">
+										<div class="flex justify-center space-x-3">
+											<!-- View Button -->
+											<button
+												class="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition shadow-sm"
+												title="View Message">
+												<i class="fa-solid fa-eye text-lg"></i>
+											</button>
+
+											<!-- Delete Button with Confirmation -->
+											<a th:href="@{'/admin/deleteContact/' + ${contact.id}}"
+												onclick="return confirm('Are you sure you want to delete this message?');"
+												class="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition shadow-sm"
+												title="Delete Message"> <i
+												class="fa-solid fa-trash-can text-lg"></i>
+											</a>
+										</div>
+									</td>
+								</tr>
+								<tr th:if="${allcontacts == null or allcontacts.isEmpty()}">
+									<td colspan="5" class="px-6 py-12 text-center text-gray-400">
+										<i class="fa-solid fa-inbox fa-3x mb-4"></i>
+										<p>No messages found in the database.</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+    function closeDeleteModal() {
+        const modal = document.getElementById('deleteSuccessModal');
+        modal.classList.add('animate__fadeOut');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 500);
+    }
+</script>
+</body>
+</html>

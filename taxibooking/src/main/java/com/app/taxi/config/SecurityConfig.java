@@ -29,6 +29,7 @@ public class SecurityConfig {
 	        .requestMatchers("/css/**", "/js/**", "/images/**", "/fragments/**").permitAll()
             
 	        // 2. ADMIN PROTECTION
+	        .requestMatchers("/readAllContacts").hasRole("ADMIN")
 	        .requestMatchers("/admin/**").hasRole("ADMIN")
 	        
 	        // 3. PUBLIC PAGES
